@@ -8,11 +8,12 @@ This project implements a simple blog application with CRUD (Create, Read, Updat
 
 ## Getting Started
 1. Clone the repository
-2. Run the containers using Docker Compose
+2. add .env file(empty)
+3. Run the containers using Docker Compose
     - docker-compose up -d
 
-3. Access the application at http://localhost:8080
-4. API end point at http://localhost:3000
+4. Access the application at http://localhost:8080
+5. API end point at http://localhost:3000
 
 
 ## Project Structure
