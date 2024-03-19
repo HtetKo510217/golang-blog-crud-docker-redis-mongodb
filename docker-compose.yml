@@ -1,0 +1,51 @@
+version: '3.9'
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vue-frontend
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+      - redis
+      - db-client
+  
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: go-backend
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+      - redis
+      - db-client
+    
+  db:
+    image: mongo
+    container_name: go-with-mongodb-docker
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=htetko
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+  db-client:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_URL=mongodb://htetko:secret@go-with-mongodb-docker:27017/
+      - ME_CONFIG_BASICAUTH_USERNAME=anyusername
+      - ME_CONFIG_BASICAUTH_PASSWORD=anypassword
+    depends_on:
+      - db
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
